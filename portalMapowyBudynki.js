@@ -25,7 +25,7 @@ var osm = new L.TileLayer('http://mapy.geoportal.gov.pl/wss/ext/OSM/BaseMap/tms/
 }).addTo(map);
 
 //warstwa WMS KIEG
-var kieg = L.tileLayer.wms('https://{s}.gugik.gov.pl/cgi-bin/KrajowaIntegracjaEwidencjiGruntow?', {
+var kieg = L.tileLayer.betterWms('https://{s}.gugik.gov.pl/cgi-bin/KrajowaIntegracjaEwidencjiGruntow?', {
   subdomains: ['integracja01','integracja02'],
   layers: 'dzialki,numery_dzialek,budynki',
   transparent: 'true',

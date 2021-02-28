@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Portal | Budynki</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="portalMapowy.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+		<script src="https://kartena.github.io/Proj4Leaflet/lib/proj4-compressed.js"></script>
+    <script src="https://kartena.github.io/Proj4Leaflet/src/proj4leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Nawigacja</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Strona główna</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="zdrowie.html">Zdrowie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="budynki.html">Budynki i działki</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="uzbrojenie.html">Uzbrojenie terenu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="zielen.html">Zieleń</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="hydrologia.html">Hydrologia</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </nav>
+    <div class="banner">
+      <h1> <img id="herb" src="herb.jpg"> Portal Mapowy m. st. Warszawy | <span>Budynki i działki</span> </h1>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Dokładne obrysy budynków i działek</h5>
+        <p class="card-text">
+          Po przyblizeniu mapy do odpowiedniej skali możliwe
+          jest przeglądanie obrysów budynków oraz granic działek. Taka
+          wizualizacja może być pomocna podczas wstępnego planownaia inwestycji
+          budowlanej lub cenna dla osób decydujących się na zakup lub sprzedaż
+          nieruchomości.</p>
+        <a href="https://www.maz.winb.gov.pl/" class="btn btn-outline-info">Ispektorat Nadzoru Budowlanego</a>
+      </div>
+    </div>
+    <center>
+      <div id="mapdiv"></div>
+    </center>
+    <div class="jumbotron">
+      <hr class="my-4">
+      <p><center>&copy; 2020 Copyright - Urząd m. st. Warszawy</center></p>
+      <p><center>Przygotowano z użyciem blibliotek <i>Lefleat</i> oraz <i>Bootstrap</i>
+      | Opracowanie <i>Antoni Dziedziejko</i> </center></p>
+    </div>
+  </body>
+  <script src="portalMapowyBudynki.js"></script>
+
+</html>

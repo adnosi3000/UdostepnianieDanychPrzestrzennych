@@ -1,0 +1,24 @@
+#mapdiv {
+  height: 800px;
+  width: 80%;
+  border: solid 2px black;
+  margin-top: 15px;
+}
+
+#herb {
+  width: 150px;
+  height: 150px;
+  margin-top: 10px;
+}
+
+#cardImage {
+  width: 100%;
+}
+
+.card-text {
+  text-align: justify;
+}
+
+span {
+  font-size: 28px;
+}

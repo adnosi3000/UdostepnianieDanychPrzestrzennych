@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Portal | Zieleń</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="portalMapowy.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+		<script src="https://kartena.github.io/Proj4Leaflet/lib/proj4-compressed.js"></script>
+    <script src="https://kartena.github.io/Proj4Leaflet/src/proj4leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Nawigacja</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Strona główna</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="zdrowie.html">Zdrowie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="budynki.html">Budynki i działki</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="uzbrojenie.html">Uzbrojenie terenu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="zielen.html">Zieleń</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="hydrologia.html">Hydrologia</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    </nav>
+    <div class="banner">
+      <h1> <img id="herb" src="herb.jpg"> Portal Mapowy m. st. Warszawy | <span>Zieleń</span> </h1>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Lasy i Ochrona Środowiska</h5>
+        <p class="card-text">Każdy lubi wypoczywać. Zaplanuj podróż do jednego z wielu
+          warszawskich lasów lub otaczających ją Rezerwatów Przyrody lub Kampinoskiego
+          Parku Narodowego. Odkryj na codzień niewidoczne płuca stolicy. Dzięki możliwości
+          przeglądania danych w tym Portalu z pewnością znajdziesz miejsce dla siebie.</p>
+          <p>Pod okienkiem z mapą znajdziesz galerię polecanych mijesc, w których możesz
+          odpocząć i złapać kontakt z naturą.</p>
+        </div>
+    </div>
+    <center>
+      <div id="mapdiv"></div>
+    </center>
+    <hr class="my-4">
+    <div class="card-group">
+      <div class="card">
+        <img id="cardImage" src="moose.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Kampinoski Park Narodowy</h5>
+          <p class="card-text">Tuż za zachodnią granicą miasta rozciąga się
+            Puszcza Kampinoska. To wielki przywilej i korzyść dla Warszawiaków,
+            że obok największego miasta w Polsce leży tak wspaniały Park Narodowy...</p>
+        </div>
+      </div>
+      <div class="card">
+        <img id="cardImage" src="lasekNaKole.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Lasek na Kole</h5>
+          <p class="card-text">Nieopodal tramwajowej zajezdni "Koło", przy ulicy
+            Obozowej, leży mały, miejki lasek. Często goszczą w nim mieszkańcy Woli
+            i Bemowa. Łatwy dojazd oraz możliwość oderwania się od miejskiego zgiełku
+            czynią to miejsce niezwykle atrakcyjnym...</p>
+        </div>
+      </div>
+      <div class="card">
+        <img id="cardImage" src="rzeka.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Wieliszewskie Łęgi</h5>
+          <p class="card-text">Obok Zalewu Zegrzyńskiego, na zachód od miejscowości
+            Rybaki, w pradolinie Narwi leży Rezerwat "Wieliszewskie Łęgi". Jest to
+            miejsce obfitujące w moc przyrodniczych ciekawostek: wydmy, bagna,
+            starorzecza...</p>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron">
+      <hr class="my-4">
+      <p><center>&copy; 2020 Copyright - Urząd m. st. Warszawy</center></p>
+      <p><center>Przygotowano z użyciem blibliotek <i>Lefleat</i> oraz <i>Bootstrap</i>
+      | Opracowanie <i>Antoni Dziedziejko</i> </center></p>
+    </div>
+  </body>
+  <script src="portalMapowyZielen.js"></script>
+
+</html>

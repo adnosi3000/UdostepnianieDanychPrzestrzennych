@@ -21,10 +21,12 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     $.ajax({
       url: url,
       success: function (data, status, xhr) {
+        console.log('Sukces');
         var err = typeof data === 'string' ? null : data;
-        showResults(err, evt.latlng, data);
+        showResults(err, evt.latlng, '<p>Id: '+data.getElementsByTagName("Attribute")[0].childNodes[0].nodeValue+'</p><p>Powiat: '+data.getElementsByTagName("Attribute")[2].childNodes[0].nodeValue+'</p>');
       },
       error: function (xhr, status, error) {
+        console.log('Błąd');
         showResults(error);
       }
     });
@@ -48,7 +50,7 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
           width: size.x,
           layers: this.wmsParams.layers,
           query_layers: this.wmsParams.layers,
-          info_format: 'xml'
+          info_format: 'text/xml'
         };
     params[params.version === '1.1.1' ? 'i' : 'x'] = point.x;
     params[params.version === '1.1.1' ? 'j' : 'y'] = point.y;
@@ -59,9 +61,6 @@ L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
   },
 
   showGetFeatureInfo: function (err, latlng, content) {
-    if (err) { console.log(err); return; } // do nothing if there's an error
-
-    // Otherwise show the content in a popup, or something.
     L.popup({ maxWidth: 800})
       .setLatLng(latlng)
       .setContent(content)

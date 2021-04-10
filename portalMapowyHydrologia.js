@@ -24,14 +24,19 @@ var osm = new L.TileLayer('http://mapy.geoportal.gov.pl/wss/ext/OSM/BaseMap/tms/
   tms: true
 }).addTo(map);
 
-//warstwa Mapy Ryzyka Powodziowego
-var powodzie = L.tileLayer.wms('https://mapy.geoportal.gov.pl/wss/ext/WodyPolskie/MapaZagrozeniaPowodziowego', {
-  subdomains: ['integracja01','integracja02'],
-  layers: 'OSZP1m,OSZP1,OSZP10',
-  transparent: 'true',
-  maxZoom: 16,
-  minZoom: 4,
-  format: 'image/png',
-  tileSize: 1024,
-  attribution: 'BDL'
+var kodyWody = {'PTWP01':'woda morska', 'PTWP02':'woda płynąca', 'PTWP03':'woda stojąca'};
+
+var graniceMiasta = L.geoJSON(warszawa, {
+  style: function(feature) {
+    return {color: '#ff3333', fillOpacity: '0'}
+  }
+}).addTo(map);
+
+var wody = L.geoJSON(ptwp, {
+  style: function(feature){
+    return {color: '#0000ff'}
+  },
+  onEachFeature: function(feature, layer){
+    layer.bindPopup('<p>Typ: '+kodyWody[feature.properties.x_kod]+'</p>')
+  }
 }).addTo(map);

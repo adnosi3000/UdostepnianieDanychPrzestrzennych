@@ -34,7 +34,7 @@ var gdos = L.tileLayer.wms('http://sdi.gdos.gov.pl/wms', {
   format: 'image/png',
   tileSize: 1024,
   attribution: 'GUGiK'
-}).addTo(map);
+})
 
 //warstwa Lasy
 var lasy = L.tileLayer.wms('http://mapserver.bdl.lasy.gov.pl/ArcGIS/services/WMS_BDL/mapserver/WMSServer', {
@@ -46,4 +46,46 @@ var lasy = L.tileLayer.wms('http://mapserver.bdl.lasy.gov.pl/ArcGIS/services/WMS
   format: 'image/png',
   tileSize: 1024,
   attribution: 'BDL'
-}).addTo(map);
+})
+
+function smog(feature, layer) {
+  layer.bindPopup("<p class='infoContent'>Pył PM10: " + feature.properties.PM10 + " &microg/m&sup3</p>");
+  layer.setIcon(czujnik)
+};
+
+var czujnik = new L.Icon({iconUrl: 'sensorIcon.png', iconSize: [30, 30]});
+
+var myRequest = new XMLHttpRequest();
+myRequest.open('GET', 'https://data.sensor.community/airrohr/v1/filter/area=52.23,21.01,12');
+myRequest.onload = function(){
+  var dataFromLuftdaten = JSON.parse(myRequest.responseText);
+  features = [];
+  for (i=0; i<dataFromLuftdaten.length; i++){
+    point = {"type": "Feature",
+          "geometry":{
+            "type": "Point",
+            "coordinates":[parseFloat(dataFromLuftdaten[i].location.longitude), parseFloat(dataFromLuftdaten[i].location.latitude)]},
+          "properties": {"PM10": parseFloat(dataFromLuftdaten[i].sensordatavalues[0].value)}};
+    features.push(point);
+  };
+  geoJsonObject = {
+  "type": "FeatureCollection",
+  "features": features
+  };
+  var data = L.geoJson(geoJsonObject, {
+    onEachFeature: smog
+  }).addTo(map);
+
+  var baseLayers = {
+  "OSM": osm
+  };
+
+  var overlayMaps = {
+  "GDOŚ - obszary chronione": gdos,
+  "Lasy": lasy,
+  "Czujniki": data
+  };
+
+  L.control.layers(baseLayers, overlayMaps).addTo(map);
+}
+myRequest.send();

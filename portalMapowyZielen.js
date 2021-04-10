@@ -49,7 +49,7 @@ var lasy = L.tileLayer.wms('http://mapserver.bdl.lasy.gov.pl/ArcGIS/services/WMS
 })
 
 function smog(feature, layer) {
-  layer.bindPopup("<p class='infoContent'>Pył PM10: " + feature.properties.PM10 + " &microg/m&sup3</p>");
+  layer.bindPopup("<p>Pył PM10: " + feature.properties.PM10 + " &microg/m&sup3</p>");
   layer.setIcon(czujnik)
 };
 
@@ -61,19 +61,43 @@ myRequest.onload = function(){
   var dataFromLuftdaten = JSON.parse(myRequest.responseText);
   features = [];
   for (i=0; i<dataFromLuftdaten.length; i++){
+    if (500 > parseFloat(dataFromLuftdaten[i].sensordatavalues[0].value) > 0){ //Przedział 0 - 500 aby wykluczyć błędy grube
     point = {"type": "Feature",
           "geometry":{
             "type": "Point",
             "coordinates":[parseFloat(dataFromLuftdaten[i].location.longitude), parseFloat(dataFromLuftdaten[i].location.latitude)]},
           "properties": {"PM10": parseFloat(dataFromLuftdaten[i].sensordatavalues[0].value)}};
     features.push(point);
-  };
-  geoJsonObject = {
+  }};
+  var geoJsonObject = {
   "type": "FeatureCollection",
   "features": features
   };
   var data = L.geoJson(geoJsonObject, {
     onEachFeature: smog
+  }).addTo(map);
+  console.log(geoJsonObject);
+  var options = {gridType: 'hex', property: 'PM10', units: 'kilometers'};
+  var hexGrid = turf.interpolate(geoJsonObject, 1, options);
+  var interpolacja = L.geoJSON(hexGrid, {
+    style: function(feature){
+      if (feature.properties.PM10 < 20){
+        return {color:'#33cc33'}
+      } else if (feature.properties.PM10 < 50){
+        return {color:'#66ff33'}
+      } else if (feature.properties.PM10 < 80){
+        return {color:'#ffff66'}
+      } else if (feature.properties.PM10 < 100){
+        return {color:'#ff9900'}
+      } else if (feature.properties.PM10 < 150){
+        return {color:'#ff3300'}
+      } else {
+        return {color:'#cc0000'}
+      }
+    },
+    onEachFeature: function(feature, layer){
+      layer.bindPopup('<p>PM10: '+feature.properties.PM10+'</p>')
+    }
   }).addTo(map);
 
   var baseLayers = {
@@ -83,7 +107,8 @@ myRequest.onload = function(){
   var overlayMaps = {
   "GDOŚ - obszary chronione": gdos,
   "Lasy": lasy,
-  "Czujniki": data
+  "Czujniki": data,
+  "Interpolacja": interpolacja
   };
 
   L.control.layers(baseLayers, overlayMaps).addTo(map);

@@ -22,3 +22,18 @@
 #span {
   font-size: 28px;
 }
+
+table {
+  border-collapse: collapse;
+  float:right;
+  margin-left: 10px;
+}
+
+table, td, th {
+  border: solid 1px black;
+}
+
+td, th {
+  padding: 8px;
+  text-align: center;
+}

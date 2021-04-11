@@ -49,7 +49,7 @@ var lasy = L.tileLayer.wms('http://mapserver.bdl.lasy.gov.pl/ArcGIS/services/WMS
 })
 
 function smog(feature, layer) {
-  layer.bindPopup("<p>Pył PM10: " + feature.properties.PM10 + " &microg/m&sup3</p>");
+  layer.bindPopup("<p>Pył PM10: " + feature.properties.PM10 + " &microgm<sup>-3</sup></p>");
   layer.setIcon(czujnik)
 };
 
@@ -78,25 +78,25 @@ myRequest.onload = function(){
   }).addTo(map);
   console.log(geoJsonObject);
   var options = {gridType: 'hex', property: 'PM10', units: 'kilometers'};
-  var hexGrid = turf.interpolate(geoJsonObject, 1, options);
+  var hexGrid = turf.interpolate(geoJsonObject, 0.75, options);
   var interpolacja = L.geoJSON(hexGrid, {
     style: function(feature){
       if (feature.properties.PM10 < 20){
-        return {color:'#33cc33'}
+        return {fillColor:'#33cc33', weight:1, color:'black', fillOpacity:0.7}
       } else if (feature.properties.PM10 < 50){
-        return {color:'#66ff33'}
+        return {fillColor:'#66ff33', weight:1, color:'black', fillOpacity:0.7}
       } else if (feature.properties.PM10 < 80){
-        return {color:'#ffff66'}
+        return {fillColor:'#ffff66', weight:1, color:'black', fillOpacity:0.7}
       } else if (feature.properties.PM10 < 100){
-        return {color:'#ff9900'}
+        return {fillColor:'#ff9900', weight:1, color:'black', fillOpacity:0.7}
       } else if (feature.properties.PM10 < 150){
-        return {color:'#ff3300'}
+        return {fillColor:'#ff3300', weight:1, color:'black', fillOpacity:0.7}
       } else {
-        return {color:'#cc0000'}
+        return {fillColor:'#cc0000', weight:1, color:'black', fillOpacity:0.7}
       }
     },
     onEachFeature: function(feature, layer){
-      layer.bindPopup('<p>PM10: '+feature.properties.PM10+'</p>')
+      layer.bindPopup('<p>PM10: '+Math.round(feature.properties.PM10)+' &microgm<sup>-3</sup></p>')
     }
   }).addTo(map);
 

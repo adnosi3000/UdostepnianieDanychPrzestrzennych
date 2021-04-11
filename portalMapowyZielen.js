@@ -49,7 +49,7 @@ var lasy = L.tileLayer.wms('http://mapserver.bdl.lasy.gov.pl/ArcGIS/services/WMS
 })
 
 function smog(feature, layer) {
-  layer.bindPopup("<p>Pył PM10: " + feature.properties.PM10 + " &microgm<sup>-3</sup></p>");
+  layer.bindPopup("<p>Pył PM10: " + Math.round(feature.properties.PM10*100)/100 + " &microgm<sup>-3</sup></p>");
   layer.setIcon(czujnik)
 };
 
@@ -96,7 +96,14 @@ myRequest.onload = function(){
       }
     },
     onEachFeature: function(feature, layer){
-      layer.bindPopup('<p>PM10: '+Math.round(feature.properties.PM10)+' &microgm<sup>-3</sup></p>')
+      layer.bindPopup('<p>PM10: '+Math.round(feature.properties.PM10*100)/100+' &microgm<sup>-3</sup></p>');
+      layer.on('mousemove', function(e){
+        layer.setStyle({fillOpacity:1});
+        document.getElementById('showPM10').value = Math.round(feature.properties.PM10*100)/100;
+      });
+      layer.on('mouseout', function(e){
+        layer.setStyle({fillOpacity:0.7})
+      });
     }
   }).addTo(map);
 

@@ -10,7 +10,7 @@ Krajowa Integracja Baz Danych Obiektów Topograficznych,</li>
 Wizualizacje Treści BDOT10k,</li>
 <li>prezentuje dane wektorowe w formacie GeoJSON: wody powierzchniowe, granice miasta
 oraz punktowe dane o jakości powietrza wraz z heksagonalną siatką interpolacji tych danych.
-Zaimplementowano definiowanie stylu oraz obsługę <i>popup'ów</i></li>
+Zaimplementowano definiowanie stylu oraz obsługę <i>popup'ów</i>,</li>
 <li>wykorzystuje dodatkowe technologie użyteczne podczas pracy z danymi przestrzennymi:
-funkcję z biblioteki turf.js oraz wtyczkę esri Leaflet</li>
+funkcję z biblioteki turf.js oraz wtyczkę esri Leaflet.</li>
 </ul></p>

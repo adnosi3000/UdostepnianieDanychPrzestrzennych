@@ -14,7 +14,7 @@ var map = L.map('mapdiv', {
 
 var osm = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Mapa topografoczna &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a>',
-}).addTo(map);
+});
 
 var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMTS/HighResolution', {
     format: 'image/png',
@@ -29,7 +29,7 @@ var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/PZGIK
     crossOrigin: true,
     minZoom: 5,
     attribution: 'Dostawca ortofotomapy &copy; <a href="https://www.geoportal.gov.pl/">Geoportal</a>'
-}).addTo(map);
+});
 
 var topoGUGiK = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/WMTS/guest/wmts/G2_MOBILE_500', {
     format: 'image/png',
@@ -44,12 +44,15 @@ var topoGUGiK = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/
     crossOrigin: true,
     minZoom: 5,
     attribution: 'Dostawca ortofotomapy &copy; <a href="https://www.geoportal.gov.pl/">Geoportal</a>'
-}).addTo(map);
+});
+
+var topoEsri = L.esri.basemapLayer('Topographic').addTo(map);
 
 var baseLayers = {
 "OSM": osm,
 "Ortofotomapa": orto,
-"BDOO / BDOT10k": topoGUGiK
+"BDOO / BDOT10k": topoGUGiK,
+"Topografia (esri)": topoEsri
 };
 
 L.control.layers(baseLayers).addTo(map);

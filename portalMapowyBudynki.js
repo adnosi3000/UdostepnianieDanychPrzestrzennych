@@ -24,8 +24,7 @@ var osm = new L.TileLayer('http://mapy.geoportal.gov.pl/wss/ext/OSM/BaseMap/tms/
   tms: true
 }).addTo(map);
 
-//warstwa WMS KIEG
-var kieg = L.tileLayer.betterWms('https://{s}.gugik.gov.pl/cgi-bin/KrajowaIntegracjaEwidencjiGruntow?', {
+var kieg = L.tileLayer.wms('https://{s}.gugik.gov.pl/cgi-bin/KrajowaIntegracjaEwidencjiGruntow?', {
   subdomains: ['integracja01','integracja02'],
   layers: 'dzialki,numery_dzialek,budynki',
   transparent: 'true',
@@ -34,3 +33,32 @@ var kieg = L.tileLayer.betterWms('https://{s}.gugik.gov.pl/cgi-bin/KrajowaIntegr
   tileSize: 1024,
   attribution: 'GUGiK'
 }).addTo(map);
+
+map.on('click', function(e){
+	if (map.hasLayer(kieg)){
+
+		var myRequest = new XMLHttpRequest();
+    // PARAMETRY DO ZAPYTANIA GETFEATUREINFO
+		// console.log(map.getBounds().getNorth());
+		// console.log(map.getBounds().getSouth());
+		// console.log(map.getBounds().getEast());
+		// console.log(map.getBounds().getWest());
+		// console.log(map.getSize().x);
+		// console.log(map.getSize().y);
+		// console.log(e.containerPoint.x);
+		// console.log(e.containerPoint.y);
+		var link = 'https://integracja.gugik.gov.pl/cgi-bin/KrajowaIntegracjaEwidencjiGruntow?VERSION=1.1.1&SERVICE=WMS&REQUEST=GetFeatureInfo&LAYERS=dzialki,numery_dzialek,budynki&QUERY_LAYERS=dzialki,numery_dzialek,budynki&SRS=EPSG:4326&WIDTH='+ map.getSize().x + '&HEIGHT=' + map.getSize().y + '&X=' + e.containerPoint.x + '&Y=' + e.containerPoint.y + '&TRANSPARENT=TRUE&FORMAT=text/html&BBOX='+map.getBounds().getWest()+','+ map.getBounds().getSouth()+','+map.getBounds().getEast() +','+map.getBounds().getNorth()
+		console.log(link)
+		myRequest.open('GET', link);
+		myRequest.onload = function(){
+			var response = myRequest.responseXML;
+      var popupText = '<p><b>Informacje z usługi GetFeatureInfo:</b></p><table><tr><td>ID działki</td><td>'+response.getElementsByTagName("Attribute")[0].childNodes[0].nodeValue+'</td></tr><tr><td>Województwo</td><td>'+response.getElementsByTagName("Attribute")[1].childNodes[0].nodeValue+'</td></tr><tr><td>Powiat</td><td>'+response.getElementsByTagName("Attribute")[2].childNodes[0].nodeValue+'</td></tr><tr><td>Gmina</td><td>'+response.getElementsByTagName("Attribute")[3].childNodes[0].nodeValue+'</td></tr><tr><td>Obręb</td><td>'+response.getElementsByTagName("Attribute")[4].childNodes[0].nodeValue+'</td></tr><tr><td>Numer działki</td><td>'+response.getElementsByTagName("Attribute")[5].childNodes[0].nodeValue+'</td></tr></table>'
+      L.popup()
+			.setLatLng(e.latlng)
+			.setContent(popupText)
+			.openOn(map);
+      map.setView(e.latlng);
+		};
+		myRequest.send();
+	}
+});

@@ -16,6 +16,13 @@ var osm = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
   attribution: 'Mapa topografoczna &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a>',
 });
 
+var bdot = L.tileLayer.wms('https://integracja.gugik.gov.pl/cgi-bin/KrajowaIntegracjaBazDanychObiektowTopograficznych', {
+  layers: 'wdrozenia,bdot',
+  format: 'image/png',
+  transparent: 'true',
+  tileSize: 1024
+});
+
 var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMTS/HighResolution', {
     format: 'image/png',
     tileSize: 512,
@@ -51,7 +58,8 @@ var topoEsri = L.esri.basemapLayer('Topographic').addTo(map);
 var baseLayers = {
 "OSM": osm,
 "Ortofotomapa": orto,
-"BDOO / BDOT10k": topoGUGiK,
+"BDOO / BDOT10k WMTS": topoGUGiK,
+"BDOT10k WMS": bdot,
 "Topografia (esri)": topoEsri
 };
 

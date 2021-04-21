@@ -23,6 +23,14 @@ var bdot = L.tileLayer.wms('https://integracja.gugik.gov.pl/cgi-bin/KrajowaInteg
   tileSize: 1024
 });
 
+var NDVI = L.tileLayer.wms('http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?MAP=D:/GiK_sem10/UDP/zadanie3/projekt_serwer.qgz', {
+  layers:'NDVI',
+  maxZoom: 20,
+  format: 'image/png',
+  transparent: true,
+  version: '1.3.0'
+})
+
 var orto = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMTS/HighResolution', {
     format: 'image/png',
     tileSize: 512,
@@ -58,6 +66,7 @@ var topoEsri = L.esri.basemapLayer('Topographic').addTo(map);
 var baseLayers = {
 "OSM": osm,
 "Ortofotomapa": orto,
+"NDVI 08.2020": NDVI,
 "BDOO / BDOT10k WMTS": topoGUGiK,
 "BDOT10k WMS": bdot,
 "Topografia (esri)": topoEsri

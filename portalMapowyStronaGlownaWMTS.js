@@ -63,16 +63,37 @@ var topoGUGiK = L.tileLayer.projwmts('https://mapy.geoportal.gov.pl/wss/service/
 
 var topoEsri = L.esri.basemapLayer('Topographic').addTo(map);
 
+url = 'http://localhost/cgi-bin/qgis_mapserv.fcgi.exe?MAP=D:/GiK_sem10/UDP/zadanie3/projekt_serwer.qgz';
+layer = 'demography'; // CO WPISAĆ JAKO NAMESPACE???
+format = "application/json";
+maxFeatures = "100";
+
+wfs_url = url+"&service=WFS&version=1.0.0&request=GetFeature"+"&TypeName="+layer+"&maxFeatures="+maxFeatures+"&outputFormat="+format;
+console.log(wfs_url);
+
+$.getJSON(wfs_url,  function(data) {
+    console.log(data);
+    poly_layer = L.geoJson(data, {
+        onEachFeature: function(feature, layer){
+          layer.bindPopup('<p>Liczba ludności: '+feature.properties.TOT+'</p>')
+        }
+    });
+    overlays["demografia (WFS)"]= poly_layer;
+    layersControl.remove();
+    layersControl = L.control.layers(baseLayers, overlays).addTo(map);
+});
+
 var baseLayers = {
 "OSM": osm,
 "Ortofotomapa": orto,
-"NDVI 08.2020": NDVI,
 "BDOO / BDOT10k WMTS": topoGUGiK,
 "BDOT10k WMS": bdot,
 "Topografia (esri)": topoEsri
 };
 
-L.control.layers(baseLayers).addTo(map);
+var overlays = {"NDVI 08.2020 (WMS)": NDVI}
+
+var layersControl = L.control.layers(baseLayers, overlays).addTo(map);
 
 var graniceMiasta = L.geoJSON(warszawa, {
   style: function(feature) {
